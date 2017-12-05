@@ -1,0 +1,12 @@
+---
+- name: Add a user to Admin Group
+  hosts: windows
+  gather_facts: false
+  tasks:
+    - name: Add User to Admin Group
+      win_group_membership:
+        name: Administrators
+        members:
+          - djohn
+          - cchukwu
+        state: present
