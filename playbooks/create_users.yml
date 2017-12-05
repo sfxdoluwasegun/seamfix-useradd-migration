@@ -7,5 +7,6 @@
       win_group_membership:
         name: Administrators
         members:
-          - Dude
+          - djohn
+          - cchukwu
         state: present
