@@ -15,4 +15,4 @@
       password: '@k0l0#'
       runlevel: highest
       triggers:
-        type: boot
+       - type: boot
