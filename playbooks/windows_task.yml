@@ -5,6 +5,7 @@
   tasks:
   - name: call Ansible Tower
     win_scheduled_task:
+      name: CreateWindowsTask
       description: Run a PowerShell script to call Tower
       executable: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
       arguments: -ExecutionPolicy Unrestricted -NonInteractive -File C:\Tower\request_tower_configuration.ps1
