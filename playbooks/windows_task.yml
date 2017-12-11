@@ -10,10 +10,9 @@
       executable: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
       arguments: -ExecutionPolicy Unrestricted -NonInteractive -File C:\Tower\request_tower_configuration.ps1
       state: present
-      frequency: once
+      triggers:
+        type: boot
       enabled: yes
       user: jiwuh
       password: '@k0l0#'
       runlevel: highest
-      triggers:
-        type: boot
