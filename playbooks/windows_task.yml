@@ -1,7 +1,10 @@
 ---
 - name: Windows Task to call Ansible Tower to add users to Admin
-  win_scheduled_task:
-    - name: call Ansible Tower
+  hosts: windows
+  gather_facts: false
+  tasks:
+  - name: call Ansible Tower
+    win_scheduled_task:
       description: Run a PowerShell script to call Tower
       executable: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
       arguments: -ExecutionPolicy Unrestricted -NonInteractive -File C:\Tower\request_tower_configuration.ps1
