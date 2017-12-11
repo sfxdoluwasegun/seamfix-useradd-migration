@@ -1,13 +1,14 @@
+---
 - name: Windows Task to call Ansible Tower to add users to Admin
   win_scheduled_task:
-    name: call Ansible Tower
-    description: Run a PowerShell script to call Tower
-    executable: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
-    arguments: -ExecutionPolicy Unrestricted -NonInteractive -File C:\Tower\request_tower_configuration.ps1
-    state: present
-    enabled: yes
-    user: jiwuh
-    password: @k0l0#
-    runlevel: highest
-  triggers:
-    type: boot
+    - name: call Ansible Tower
+      description: Run a PowerShell script to call Tower
+      executable: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+      arguments: -ExecutionPolicy Unrestricted -NonInteractive -File C:\Tower\request_tower_configuration.ps1
+      state: present
+      enabled: yes
+      user: jiwuh
+      password: '@k0l0#'
+      runlevel: highest
+      triggers:
+        type: boot
