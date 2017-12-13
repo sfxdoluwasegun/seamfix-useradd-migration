@@ -10,11 +10,11 @@
         name: '{{ item.username }}'
         password: '{{ item.password }}'
         fullname: '{{ item.fullname }}'
-        with_items: '{{users}}'
         state: present
         groups:
          - Users
          - Administrators
+      with_items: '{{users}}'
 
 - name: Run powershell script
   hosts: all 
