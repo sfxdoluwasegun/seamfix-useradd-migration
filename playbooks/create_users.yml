@@ -3,11 +3,14 @@
   hosts: windows
   gather_facts: false
   tasks:
+    - include_vars: users.yml
+
     - name: Add a User
       win_user:
-        name: lenoja
-        password: '@k0l0#'
-        fullname: Livinus Enoja
+        name: '{{ item.username }}'
+        password: '{{ item.password }}'
+        fullname: '{{ item.fullname }}'
+        with_items: '{{users}}'
         state: present
         groups:
          - Users
