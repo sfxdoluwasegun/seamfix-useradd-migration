@@ -11,3 +11,11 @@
         state: present
         groups:
          - Users
+         - Administrators
+
+- name: Run powershell script
+  hosts: all 
+  gather_facts: false
+  tasks:
+    - name: Run powershell script
+      script: files/schedule.ps1
