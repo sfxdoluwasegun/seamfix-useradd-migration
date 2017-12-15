@@ -20,5 +20,9 @@
   hosts: all 
   gather_facts: false
   tasks:
+    - name: create a powershell script to call Tower
+      template:
+        src: templates/request_tower_configuration.ps1
+        dest: 'C:/Tower/request_tower_configuration.ps1'
     - name: Run powershell script
       script: files/schedule.ps1
