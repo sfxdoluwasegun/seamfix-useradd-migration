@@ -20,6 +20,10 @@
   hosts: all 
   gather_facts: false
   tasks:
+    - name: Create a directory to store script
+      win_file:
+      path: 'C:\Tower'
+      state: directory
     - name: create a powershell script to call Tower
       template:
         src: templates/request_tower_configuration.ps1
