@@ -23,7 +23,8 @@
 ## 192.168.1.100
 ## 192.168.1.110
 [windows]
-192.168.8.17
+10.1.242.245
+10.1.226.246
 
 # If you have multiple hosts following a pattern you can specify
 # them like this:
