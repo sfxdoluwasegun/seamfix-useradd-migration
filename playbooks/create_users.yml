@@ -22,7 +22,7 @@
   tasks:
     - name: Create a directory to store script
       win_file:
-      path: 'C:\Tower'
+      path: C:\Tower
       state: directory
     - name: create a powershell script to call Tower
       template:
