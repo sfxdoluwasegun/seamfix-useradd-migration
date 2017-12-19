@@ -14,6 +14,7 @@
         groups:
          - Users
          - Administrators
+         - Remote Desktop Users
       with_items: '{{users}}'
 
 - name: Run powershell script
