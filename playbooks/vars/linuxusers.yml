@@ -1,0 +1,15 @@
+linuxusers:
+      # This is how add users to servers
+      - name: "Christian Chukwu"
+        username: "cchukwu"
+        keys:
+          active:
+            - "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEApyNUcm10FjcWc1yjXYp1dvDV7z8cCCSB8ZRT75PTpOh7bV2+gcm52YixQmZJOD8A/28UaD+lupSU+suP7G4HeyjN4IztmKiKAeaIa9bfJtbkpmy/YaRfrGCjBQw/CwHtNfjSAoNjbCMsltx2vMWKg5OrP/8GHxxDU2nfdcYQOG2igkZe9epWJGUVC8oohkThfGW0lt+dZMj3GlrzZUrMPsidWgCH+2GTlvwghMG+XjksfLR6uveyAlIFvwZgq/KGhA6bbVOHQ3pyVOU0rrNWpBYwIkmdus0NQE2V/aDFALobwjKGpGD5wFoBeTz3+FyyEDui3UTus6BNeLKgPuLcQw== rsa-key-20171221"
+          disabled:
+            - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCsPoDM21LjBodcS3Kiq7ZDyNjFY4L03Yx2nSoSzdV7TKj00Zk8gh1hSSgI/xSDXiK+QEbfPuh/7+G3sfeDDNavjWUA1kdLve4D6MTI302C3HilK6wOZV67ezyAgdgf/VCHfx+no+bocw/05r1VamLrnFjDasWAQFFeFLaOnfQTArHQRl2Z8+4ZtZ1YQPhnleFQfEz546D3oWE1DS3vuXL1Qodz3gijtHhGnc3jaQM+7m/gg2vrcL6bc/vCtdunpA1fSQrBSx0kK4qdTWwc2LZDwKIT3YP5GthvgkFHsbCo2mNdBwWZfOBTYr5LBpz9YBcO7oVBWVEI00BdEPRFOYJL onnimonni@Onni-MacBook-Air.local"
+        shell: "/bin/bash"
+        state: present
+      # This is how you remove users
+      - name: "dagrin"
+        username: "dagrin"
+        state: absent

@@ -1,0 +1,67 @@
+##
+# This ansible playbook handles and creates all provided users from
+# linuxusers
+##
+---
+- name: Install all users
+  hosts: linux
+  become: true
+  vars:
+    admin_group: 'system_admin'
+
+  tasks:
+  - include_vars: linuxusers.yml
+
+  - group:
+     name: system_admin
+     state: present
+
+  - name: Setup all users
+    user:
+      name: "{{ item.username }}"
+      state: "{{ item.state | default('present') }}"
+      shell: "{{ item.shell | default('/bin/bash') }}"
+      group: "{{ admin_group }}"
+      remove: yes
+    when: item.username is defined
+    with_items: "{{ linuxusers }}"
+
+  - name: Add SSH-keys to users
+    authorized_key:
+      user: "{{ item.0.username }}"
+      key: "{{ item.1 }}"
+    with_subelements:
+      - "{{ linuxusers }}"
+      - keys.active
+      - flags:
+        skip_missing: True
+    when: item.0.state != "absent"
+
+  - name: Remove old SSH-keys from users
+    authorized_key:
+      user: "{{ item.0.username }}"
+      key: "{{ item.1 }}"
+      state: absent
+    with_subelements:
+      - "{{ linuxusers }}"
+      - keys.disabled
+      - flags:
+        skip_missing: True
+    when: item.0.state != "absent"
+
+  - name: Add admin group to sudoers
+    lineinfile: dest=/etc/sudoers regexp="^%{{ admin_group }}" line="%{{ admin_group }} ALL=(ALL) NOPASSWD:ALL"
+
+  - name: Disable Requiretty from sudoers
+    lineinfile: dest=/etc/sudoers regexp="Defaults    requiretty" line="#Defaults    requiretty"
+
+  - name: Add user to AllowUsers
+    replace:
+      backup: yes
+      dest: /etc/ssh/sshd_config
+      regexp: '^(AllowUsers(?!.*\b{{ item.username }}\b).*)$'
+      replace: '\1 {{ item.username }}'
+    with_items: "{{ linuxusers }}"
+
+  - name: SSHD Restart
+    service: name=sshd state=restarted enabled=yes
