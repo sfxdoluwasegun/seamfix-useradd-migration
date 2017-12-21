@@ -9,6 +9,11 @@ linuxusers:
             - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCsPoDM21LjBodcS3Kiq7ZDyNjFY4L03Yx2nSoSzdV7TKj00Zk8gh1hSSgI/xSDXiK+QEbfPuh/7+G3sfeDDNavjWUA1kdLve4D6MTI302C3HilK6wOZV67ezyAgdgf/VCHfx+no+bocw/05r1VamLrnFjDasWAQFFeFLaOnfQTArHQRl2Z8+4ZtZ1YQPhnleFQfEz546D3oWE1DS3vuXL1Qodz3gijtHhGnc3jaQM+7m/gg2vrcL6bc/vCtdunpA1fSQrBSx0kK4qdTWwc2LZDwKIT3YP5GthvgkFHsbCo2mNdBwWZfOBTYr5LBpz9YBcO7oVBWVEI00BdEPRFOYJL onnimonni@Onni-MacBook-Air.local"
         shell: "/bin/bash"
         state: present
+      - name: "Samuel Isola"
+        username: "sisola"
+        keys:
+          active:
+            - "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAxFaKE/+qFo4/d+NV/S49Cc56r3B+eeDqlQfAuxs/q0x+TzJm65D678IEP7lfgWkubhiz9OTpzNzpss4BzoqHr2oMnf4/zMjW6GgveCKvxSIcwbfjhH3bJc6LRsqlURWPvnO+SRgQKcgo5103J1CX+4eSfJj8T8WY2Zx7mWefDlWkhFEgFCRRWw7bF8pepfNBP7Pral4n9oma5+YPOeZpIcKwqM9uSqRnkJ7UFR5nOyGaqay6RMXXBe2V/9mA15z96WsCJ4snteLqlye/6kzVUN29csvW8v61goJncO64G3bKy3URCL7rk5E4nYZg0SOgh7CoSFgqze62Z+au8o8TwQ== rsa-key-20171221"
       # This is how you remove users
       - name: "dagrin"
         username: "dagrin"
