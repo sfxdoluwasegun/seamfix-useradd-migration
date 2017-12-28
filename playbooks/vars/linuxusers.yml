@@ -14,3 +14,12 @@ linuxusers:
         keys:
           active:
             - "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAxFaKE/+qFo4/d+NV/S49Cc56r3B+eeDqlQfAuxs/q0x+TzJm65D678IEP7lfgWkubhiz9OTpzNzpss4BzoqHr2oMnf4/zMjW6GgveCKvxSIcwbfjhH3bJc6LRsqlURWPvnO+SRgQKcgo5103J1CX+4eSfJj8T8WY2Zx7mWefDlWkhFEgFCRRWw7bF8pepfNBP7Pral4n9oma5+YPOeZpIcKwqM9uSqRnkJ7UFR5nOyGaqay6RMXXBe2V/9mA15z96WsCJ4snteLqlye/6kzVUN29csvW8v61goJncO64G3bKy3URCL7rk5E4nYZg0SOgh7CoSFgqze62Z+au8o8TwQ== rsa-key-20171221"
+        shell: "/bin/bash"
+        state: present
+      - name: "David John"
+        username: "djohn"
+        keys:
+          active:
+            - "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEArsNa+e7097OlqYU8RWlTyjsgbl10ciS4068Cmr8UvoQSxEACrQGdQf/+lgN/+whbTKeiD485X2FS3wlOjfDNtkj7LdfiZ+ByveE1/ncjEhSfD5Q3hGArbQL8amgXv6He06iocdxT1UCNqtmUTLI0KP0EKeirNfENc1mihE73afBOlUCNI5cHzLsWnOiryZ+hXxL/D/1T7bjMUyMh6dSThylA7tRfobS0K0d3fSGiy9da2LrW5pkGy7lekOM7nof6gtptCIqkJmZXcloIATnfMT0aCWZeC9Bt3zMyFimT3AC9JFS871OT5IOOy7hP+AInp67r89V7/Fu+OYxKhnfBDw== rsa-key-20171227"
+        shell: "/bin/bash"
+        state: present
