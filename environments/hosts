@@ -27,7 +27,7 @@
 10.1.226.246
 
 [linux]
-52.9.121.231 ansible_port=2525
+fuelvoucher.com.ng ansible_port=2525
 
 # If you have multiple hosts following a pattern you can specify
 # them like this:
