@@ -1,0 +1,38 @@
+# These tasks are meant to deploy Bitvise app.
+
+---
+- hosts: windows
+
+  tasks:
+  - name: Include variable file
+    include_vars:
+       file: 'vars/bitvise.yml'
+
+  - name: check if Bitvise service is already installed
+    win_service:
+      name: 'BvSshServer'
+    register: app_service_installed
+
+  - name: Create tmp directory if it doesn't exist
+    win_file:
+      path: 'C:\tmp'
+      state: directory
+    when: app_service_installed.exists == false
+
+  - name: Download Bitvise using aria2
+    win_command: 'aria2c.exe -x 16 --continue=true http://68.169.50.86:7997/nexus/service/local/repositories/ops/content/bitvise/BvSshServer/{{ bitvise_version }}/BvSshServer-{{ bitvise_version }}.exe'
+    args:
+      chdir: 'C:\tmp'
+    when: app_service_installed.exists == false
+
+  - name: Install Bitvise
+    win_package:
+      path: 'C:\tmp\BvSshServer-{{ bitvise_version }}.exe'
+      creates_path: 'C:\Program Files\Bitvise SSH Server\BvSshServer.exe'
+      arguments: '-defaultInstance -acceptEULA -startService'
+      state: present
+      register: update_result
+    when: app_service_installed.exists == false
+
+  - name: Reboot windows if required
+    win_reboot:

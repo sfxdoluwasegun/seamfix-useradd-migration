@@ -1,0 +1,109 @@
+# These tasks are meant to deploy biokozuna app.
+
+---
+- hosts: windows
+
+  vars:
+    app_name: biokozuna
+
+  tasks:
+   - name: Include variable file
+     include_vars:
+       file: 'vars/biokozuna.yml'
+
+   - name: Set jdk_installed variable as false
+     set_fact:
+       jdk_installed: false
+
+   - name: Check if JDK is already installed
+     set_fact:
+       jdk_installed: true
+     when: "'JAVA_HOME' in ansible_env"
+  
+   - name: Install Java JRE 8
+     win_chocolatey: 
+       name: jre8
+       state: present
+     when: jdk_installed == false
+
+   - name: Install Java JDK 8
+     win_chocolatey: 
+       name: jdk8
+       state: present
+     when: jdk_installed == false
+
+   - name: Check if biokozuna app is already installed
+     win_stat:
+       path: '{{ biokozuna_path }}'
+     register: app_installed
+
+   - name: Create tmp directory if it doesn't exist
+     win_file:
+      path: '{{ temp_path }}'
+      state: directory
+
+   - name: Create biokozuna directory if it doesn't exist
+     win_file:
+      path: '{{ biokozuna_path }}'
+      state: directory
+
+   - name: Download biokozuna using aria2
+     win_command: 'aria2c.exe -x 16 --continue=true http://68.169.50.86:7997/nexus/service/local/repositories/ops/content/biokozuna/bz/{{ biokozuna_version }}/bz-{{ biokozuna_version }}.zip'
+     args:
+       chdir: '{{ temp_path }}'
+     when: app_installed.stat.exists == false
+
+   - name: Unzip biokozuna to app folder
+     win_unzip:
+       src: '{{ temp_path }}\bz-{{ biokozuna_version }}.zip'
+       dest: '{{ temp_path }}'
+     when: app_installed.stat.exists == false
+
+   - name: Copy extracted biokozuna installation to app folder
+     win_copy:
+      src: '{{ temp_path }}\biokozuna/'
+      dest: '{{ biokozuna_path }}\'
+      remote_src: True
+     when: app_installed.stat.exists == false
+
+   - name: check if Biokozuna service is already installed
+     win_service:
+      name: '{{ service_name }}'
+     register: app_service_installed
+
+   - name: Install nssm
+     win_chocolatey: 
+       name: nssm
+       state: latest
+
+   - name: Install Biokozuna service using nssm
+     win_nssm:
+      name: '{{ service_name }}'
+      application: '{{ biokozuna_path }}\1.3.2-mtn-prod-6.1\bz-{{ biokozuna_version }}-final.exe'
+      stdout_file: '{{ biokozuna_path }}\biokozuna.log'
+      state: present
+      start_mode: auto
+     when: app_service_installed.exists == false
+
+   - name: Check if current deployed package file exists
+     win_stat:
+       path: '{{ biokozuna_path }}\1.3.2-mtn-prod-6.1\bz-{{ biokozuna_version }}-final.jar'
+     register: current_package
+
+   - name: Create backup directory if one doesn't exist
+     win_file:
+       path: '{{ biokozuna_path }}\backup'
+       state: directory
+
+   - name: Backup existing app artifact if it exists
+     win_shell: 'move bz-{{ biokozuna_version }}-final.jar {{ biokozuna_path }}\backup\bz-{{ biokozuna_version }}-final.jar.{{ ansible_date_time.epoch }}'
+     args:
+          chdir: '{{ biokozuna_path }}\1.3.2-mtn-prod-6.1'
+     when: current_package.stat.exists == true
+
+   - name: Stop Biokozuna service
+     win_service:
+       name: '{{ service_name }}'
+       start_mode: auto
+       state: stopped
+     when: app_service_installed.exists == true

@@ -1,0 +1,10 @@
+---
+name: biokozuna
+current_version: '1.4.3-legacy'
+previous_version: '1.4.3-legacy'
+biokozuna_version: '1.4.4'
+temp_path: 'C:\tmp'
+biokozuna_path: 'C:\fix\sw\biokozuna'
+service_name: Biokozuna
+app_name: biokozuna
+app_user_password: '@k0l0#'
