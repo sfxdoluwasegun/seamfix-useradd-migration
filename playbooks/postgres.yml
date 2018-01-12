@@ -1,0 +1,35 @@
+# These tasks are meant to deploy Postgresql Server.
+
+---
+- hosts: windows
+
+  tasks:
+  - name: Include variable file
+    include_vars:
+       file: 'vars/bitvise.yml'
+
+  - name: check if Postgresql is already installed
+    win_stat:
+       path: 'C:\Program Files\PostgreSQL\9.4'
+    register: app_installed
+
+  - name: Create tmp directory if it doesn't exist
+    win_file:
+      path: 'C:\tmp'
+      state: directory
+    when: app_installed.stat.exists == false
+
+  - name: Download Postgres using aria2
+    win_command: 'aria2c.exe -x 16 --continue=true http://68.169.50.86:7997/nexus/service/local/repositories/ops/content/postgres/postgresql-64bit/9.4.15/postgresql-64bit-9.4.15-x64.exe'
+    args:
+      chdir: 'C:\tmp'
+    when: app_installed.stat.exists == false
+
+  - name: Install Postgres
+    win_package:
+      path: 'C:\tmp\postgresql-64bit-9.4.15-x64.exe'
+      creates_path: 'C:\Program Files\PostgreSQL\9.4\uninstall-postgresql.exe'
+      arguments: '--mode unattended'
+      state: present
+      register: update_result
+    when: app_installed.stat.exists == false
