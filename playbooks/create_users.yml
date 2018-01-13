@@ -12,6 +12,7 @@
         fullname: '{{ item.fullname }}'
         state: present
         groups:
+         - Users
          - Administrators
          - Remote Desktop Users
       with_items: '{{users}}'
