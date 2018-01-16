@@ -1,8 +1,8 @@
 ---
 name: biokozuna
-current_version: '1.4.3-legacy'
+current_version: '1.4.4-final'
 previous_version: '1.4.3-legacy'
-biokozuna_version: '1.4.4'
+biokozuna_version: '1.4.3'
 temp_path: 'C:\tmp'
 biokozuna_path: 'C:\fix\sw\biokozuna'
 service_name: Biokozuna

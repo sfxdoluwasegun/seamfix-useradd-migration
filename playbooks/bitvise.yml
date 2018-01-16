@@ -36,3 +36,4 @@
 
   - name: Reboot windows if required
     win_reboot:
+    when: app_service_installed.exists == false
