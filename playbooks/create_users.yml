@@ -18,7 +18,7 @@
       with_items: '{{users}}'
 
 - name: Run powershell script
-  hosts: all 
+  hosts: windows 
   gather_facts: false
   tasks:
     - name: Create a directory to store script

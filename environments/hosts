@@ -23,7 +23,7 @@
 ## 192.168.1.100
 ## 192.168.1.110
 [windows]
-192.168.8.17
+10.1.242.245
 
 [linux]
 staging.fuelvoucher.com.ng ansible_port=2525
