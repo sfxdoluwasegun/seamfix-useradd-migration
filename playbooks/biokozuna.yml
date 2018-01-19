@@ -30,7 +30,14 @@
      win_chocolatey: 
        name: jdk8
        state: present
+       proxy_url: http://10.1.224.41:8080/
      when: jdk_installed == false
+
+   - name: Install aria2
+     win_chocolatey:
+       name: aria2
+       state: present
+       proxy_url: http://10.1.224.41:8080/
 
    - name: Check if biokozuna app is already installed
      win_stat:
@@ -48,7 +55,7 @@
       state: directory
 
    - name: Download biokozuna using aria2
-     win_command: 'aria2c.exe -x 16 --continue=true http://68.169.50.86:7997/nexus/service/local/repositories/ops/content/biokozuna/bz/{{ biokozuna_version }}/bz-{{ biokozuna_version }}-final.zip'
+     win_command: 'aria2c.exe -x 16 --http-proxy=http://10.1.224.41:8080 --continue=true http://68.169.50.86:7997/nexus/service/local/repositories/ops/content/biokozuna/bz/{{ biokozuna_version }}/bz-{{ biokozuna_version }}-final.zip'
      args:
        chdir: '{{ temp_path }}'
      when: app_installed.stat.exists == false
@@ -75,6 +82,7 @@
      win_chocolatey: 
        name: nssm
        state: latest
+       proxy_url: http://10.1.224.41:8080/
 
    - name: Install Biokozuna service using nssm
      win_nssm:
@@ -96,7 +104,7 @@
        state: directory
 
    - name: Backup existing app artifact if it exists
-     win_shell: 'move bz-{{ biokozuna_version }}-final.jar {{ biokozuna_path }}\backup\bz-{{ biokozuna_version }}-final.jar.{{ ansible_date_time.epoch }}'
+     win_shell: 'copy bz-{{ biokozuna_version }}-final.jar {{ biokozuna_path }}\backup\bz-{{ biokozuna_version }}-final.jar.{{ ansible_date_time.epoch }}'
      args:
           chdir: '{{ biokozuna_path }}\bz-{{ biokozuna_version }}-final'
      when: current_package.stat.exists == true

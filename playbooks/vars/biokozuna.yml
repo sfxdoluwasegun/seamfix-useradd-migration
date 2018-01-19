@@ -4,7 +4,7 @@ current_version: '1.4.4-final'
 previous_version: '1.4.3-legacy'
 biokozuna_version: '1.4.3'
 temp_path: 'C:\tmp'
-biokozuna_path: 'C:\fix\sw\biokozuna'
+biokozuna_path: 'C:\apps\biokozuna'
 service_name: Biokozuna
 app_name: biokozuna
 app_user_password: '@k0l0#'
