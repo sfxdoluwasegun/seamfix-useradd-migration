@@ -2,3 +2,7 @@
 name: bitvise
 bitvise_version: '7.38'
 bitvise_path: 'http://68.169.50.86:7997/nexus/service/local/repositories/ops/content/bitvise/BvSshServer'
+postgres_install_path: 'C:\apps\PostgreSQL\9.4'
+postgres_data_dir: 'C:\apps\PostgreSQL\9.4\data'
+postgres_default_path: 'C:\Program Files\PostgreSQL\9.4'
+postgres_service: 'PostgreSQL-9.4'

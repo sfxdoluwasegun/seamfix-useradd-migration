@@ -10,6 +10,8 @@
    - name: Include variable file
      include_vars:
        file: 'vars/biokozuna.yml'
+     tags:
+        - rollback
 
    - name: Set jdk_installed variable as false
      set_fact:
@@ -104,7 +106,7 @@
        state: directory
 
    - name: Backup existing app artifact if it exists
-     win_shell: 'copy bz-{{ biokozuna_version }}-final.jar {{ biokozuna_path }}\backup\bz-{{ biokozuna_version }}-final.jar.{{ ansible_date_time.epoch }}'
+     win_shell: 'copy bz-{{ biokozuna_version }}-final.jar {{ biokozuna_path }}\backup\bz-{{ biokozuna_version }}-final-bak.jar'
      args:
           chdir: '{{ biokozuna_path }}\bz-{{ biokozuna_version }}-final'
      when: current_package.stat.exists == true
@@ -115,3 +117,40 @@
        start_mode: auto
        state: stopped
      when: app_service_installed.exists == true
+
+   - name: Create rollback directory if one doesn't exist
+     win_file:
+       path: '{{ biokozuna_path }}\rollback'
+       state: directory
+     tags:
+        - rollback
+   
+   - name: Stop Biokozuna service before rollback
+     win_service:
+       name: '{{ service_name }}'
+       start_mode: auto
+       state: stopped
+     tags:
+        - rollback
+
+   - name: Remove the artifact to be rolled back
+     win_shell: 'Move-Item bz-{{ biokozuna_version }}-final.jar {{ biokozuna_path }}\rollback\bz-{{ biokozuna_version }}-final-bak.jar -force'
+     args:
+          chdir: '{{ biokozuna_path }}\bz-{{ biokozuna_version }}-final'
+     tags:
+        - rollback
+
+   - name: Roll back artifact
+     win_shell: 'Move-Item bz-{{ biokozuna_version }}-final-bak.jar {{ biokozuna_path }}\bz-{{ biokozuna_version }}-final\bz-{{ biokozuna_version }}-final.jar -force'
+     args:
+          chdir: '{{ biokozuna_path }}\backup'
+     tags:
+        - rollback
+
+   - name: Start Biokozuna service after rollback
+     win_service:
+       name: '{{ service_name }}'
+       start_mode: auto
+       state: started
+     tags:
+        - rollback

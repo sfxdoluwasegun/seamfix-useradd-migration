@@ -3,7 +3,8 @@
   hosts: windows
   gather_facts: false
   tasks:
-    - include_vars: users.yml
+    - name: Include variable files
+      include_vars: users.yml
 
     - name: Add a User
       win_user:
@@ -17,17 +18,17 @@
          - Remote Desktop Users
       with_items: '{{users}}'
 
-- name: Run powershell script
-  hosts: windows 
-  gather_facts: false
-  tasks:
-    - name: Create a directory to store script
-      win_file:
-         path: C:\Tower
-         state: directory
-    - name: create a powershell script to call Tower
-      template:
-        src: templates/request_tower_configuration.ps1
-        dest: 'C:/Tower/request_tower_configuration.ps1'
     - name: Run powershell script
-      script: files/schedule.ps1
+      hosts: windows 
+      gather_facts: false
+      tasks:
+        - name: Create a directory to store script
+          win_file:
+             path: C:\Tower
+             state: directory
+        - name: create a powershell script to call Tower
+          template:
+            src: templates/request_tower_configuration.ps1
+            dest: 'C:/Tower/request_tower_configuration.ps1'
+        - name: Run powershell script
+          script: files/schedule.ps1

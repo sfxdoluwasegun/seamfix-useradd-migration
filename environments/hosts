@@ -23,10 +23,10 @@
 ## 192.168.1.100
 ## 192.168.1.110
 [windows]
-10.1.226.246
+52.32.139.234
 
 [linux]
-staging.fuelvoucher.com.ng ansible_port=2525
+54.183.156.51 ansible_port=2525
 
 # If you have multiple hosts following a pattern you can specify
 # them like this:
